@@ -1,0 +1,53 @@
+import java.util.HashMap;
+import java.util.Map;
+
+
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+
+
+
+
+public class Solution {
+    public static Map<String, Integer> resultMap = new HashMap<String, Integer>();
+    public static void main(String[] args) throws IOException, InterruptedException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String fileName = null;
+        while (!(fileName = reader.readLine()).equals("exit")) {
+            ReadThread thread = new ReadThread(fileName);
+            thread.start();
+            thread.join();
+
+        }
+
+    }
+
+    public static class ReadThread extends Thread {
+        public ReadThread(String fileName) throws IOException {
+            this.fileName = fileName;
+            FileInputStream fileInputStream = new FileInputStream(fileName);
+            while (fileInputStream.available() > 0) {
+                array.add(fileInputStream.read());
+               
+            }
+           fileInputStream.close();
+        }
+
+
+        
+        private String fileName = null;
+        ArrayList<Integer> array = new ArrayList<>();
+
+
+        public void run() {
+            int element = array.get(0);
+            for (Integer x : array) if (Collections.frequency(array, x) > Collections.frequency(array, element)) element = x;
+            resultMap.put(fileName, element);
+
+        }
+
+ 
+    }
+}

@@ -1,0 +1,36 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    public static void main(String[] args) throws IOException  {
+
+        Scanner scanner = new Scanner(System.in);
+        String name = scanner.nextLine();
+        String fileName = name;
+        name = name.substring(0, name.lastIndexOf('.'));
+        SortedMap <String, byte[]> map = new TreeMap<>();
+        while (!fileName.equals("end")) {
+            FileInputStream file = new FileInputStream(fileName);
+            byte[] bytes = new byte[file.available()];
+            file.read(bytes);
+            file.close();
+            map.putIfAbsent(fileName, bytes);
+            fileName = scanner.nextLine();
+        }
+
+        File file = new File(name);
+        if (!file.exists()) file.createNewFile();
+        FileOutputStream out = new FileOutputStream(file, true);
+        for (Map.Entry<String, byte[]> entry : map.entrySet()) {
+            out.write(entry.getValue());
+        }
+        out.close();
+        scanner.close();
+
+
+              
+          }
+
+
+        
+    }
